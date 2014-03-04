@@ -1,6 +1,6 @@
 #' TCGA Fastlane
 #' 
-#' TCGA Data Processing Pipeline for R
+#' Converting TCGA genomic profiles to the data format used in genomic analysis
 #' Columbia University GISL
 #' @author Tai-Hsien Ou Yang
 #' @export 
@@ -28,20 +28,20 @@ getGeneSymbols = function(innames){
     )
 }
 
-#rsem2rda( DATA_PATH, SDRF_FILE, SAMPLE_TYPE_FILE,SAMPLE_TYPE  , OUTPUT_FILE="e.rda"   )
+#gefile2mat( DATA_PATH, SDRF_FILE, SAMPLE_TYPE_FILE,SAMPLE_TYPE  , DATA_TYPE=".rsem.genes.results", OUTPUT_FILE="e.rda"   )
 
 #Convert genomic profiles into a matrix
-rsem2rda<-function( DATA_PATH=DATA_PATH, SDRF_FILE=SDRF_FILE, SAMPLE_TYPE_FILE=SAMPLE_TYPE_FILE,SAMPLE_TYPE=SAMPLE_TYPE  , OUTPUT_FILE="e.rda"   ){
+gefile2mat<-function( DATA_PATH=DATA_PATH, SDRF_FILE=SDRF_FILE, SAMPLE_TYPE_FILE=SAMPLE_TYPE_FILE, SAMPLE_TYPE=SAMPLE_TYPE, DATA_TYPE=".rsem.genes.results", OUTPUT_FILE="e.rda"   ){
 
 #Read the RSEM data 
 cat("Sorting genomic profiles...")
 files = dir(path= DATA_PATH, full.names=TRUE);
-files = files[grep(".rsem.genes.results", files)];
+files = files[grep(DATA_TYPE, files)];
 data <- lapply(files, read.delim, stringsAsFactors=FALSE, as.is=TRUE);
 
 #Data filtering
 files<-gsub(".*unc.edu.","",files)
-files<-gsub(".rsem.genes.results","",files)
+files<-gsub(DATA_TYPE,"",files)
 files<-substr(files,1,36)
 
 #Read the SDRF data
