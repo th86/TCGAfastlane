@@ -1,4 +1,3 @@
-
 #' TCGA Fastlane
 #' 
 #' TCGA Data Processing Pipeline for R
@@ -89,20 +88,21 @@ for( i in 1:length(barcode)){
         e[,i]<-sample_e
     }
 
-
-    if(i %% 100 == 0)
+    if(i %% 10 == 0)
       setTxtProgressBar(b, i/length(barcode))    
 } #End of for 
 
-cat( length(barcode), " genomic profiles were parsed\n"   ) 
+cat( length(barcode), " genomic profiles are parsed\n"   ) 
 
 
 
-#subset
-if( SAMPLE_TYPE !="" )
+#extract subset
+if( SAMPLE_TYPE !="" ){
     e<-e[ , intersect( sample_retain_barcode , colnames(e) )]
+    cat( ncol(e), SAMPLE_TYPE , "samples are extracted\n"   ) 
+}
 
-
+#Save
 cat("Saving the matrix...")
 save(e,file=OUTPUT_FILE)
 cat("DONE\n")
