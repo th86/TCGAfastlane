@@ -9,7 +9,7 @@
 
 
 DATA_PATH="/media/taihsien/F620B94320B90C1D/dataset/TCGA/KIRC/unc.edu_KIRC.IlluminaHiSeq_RNASeqV2.Level_3.1.3.0/"
-SDRF_FILE="/media/taihsien/F620B94320B90C1D/dataset/TCGA/KIRC/unc.edu_KIRC.IlluminaHiSeq_RNASeqV2.1.3.0.sdrf.txt"
+SDRF_FILE="/media/taihsien/F620B94320B90C1D/dataset/TCGA/KIRC/unc.edu_KIRC.IlluminaHiSeq_RNASeqV2.1.4.0.sdrf.txt"
 SAMPLE_TYPE_FILE="/media/taihsien/F620B94320B90C1D/dataset/TCGA/KIRC/nationwidechildrens.org_biospecimen_sample_kirc.txt"
 SAMPLE_TYPE="Primary Tumor"
 
