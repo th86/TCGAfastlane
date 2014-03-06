@@ -7,10 +7,10 @@
 
 
 
-DATA_PATH="/media/taihsien/F620B94320B90C1D/dataset/TCGA/KIRC/unc.edu_KIRC.IlluminaHiSeq_RNASeqV2.Level_3.1.3.0/"
-SDRF_FILE="/media/taihsien/F620B94320B90C1D/dataset/TCGA/KIRC/unc.edu_KIRC.IlluminaHiSeq_RNASeqV2.1.4.0.sdrf.txt"
-SAMPLE_TYPE_FILE="/media/taihsien/F620B94320B90C1D/dataset/TCGA/KIRC/nationwidechildrens.org_biospecimen_sample_kirc.txt"
-SAMPLE_TYPE="Primary Tumor"
+#DATA_PATH="/media/taihsien/F620B94320B90C1D/dataset/TCGA/ACC/unc.edu_ACC.IlluminaHiSeq_RNASeqV2.Level_3.1.0.0/"
+#SDRF_FILE="/media/taihsien/F620B94320B90C1D/dataset/TCGA/ACC/unc.edu_ACC.IlluminaHiSeq_RNASeqV2.1.0.0.sdrf.txt"
+#SAMPLE_TYPE_FILE="/media/taihsien/F620B94320B90C1D/dataset/TCGA/ACC/nationwidechildrens.org_biospecimen_sample_acc.txt"
+#SAMPLE_TYPE="Primary Tumor"
 
 
 #Extract gene symbols
@@ -107,7 +107,6 @@ cat("Saving the matrix...")
 save(e,file=OUTPUT_FILE)
 cat("DONE\n")
 
-
-    return(1)
+    return(ncol(e))
 }
 
