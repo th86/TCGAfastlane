@@ -9,6 +9,7 @@ source("gefile2mat.R")
 
 PATH<-getwd()
 DIR<-dir()
+DIR<-DIR[file.info(dir())$isdir]
 
 
 CANCER_TYPE_PATH=paste(PATH, "/",DIR, sep="")
