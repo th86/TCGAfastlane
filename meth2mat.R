@@ -12,24 +12,49 @@
 #SAMPLE_TYPE_FILE="/media/taihsien/F620B94320B90C1D/dataset/TCGA_meth/BRCA/nationwidechildrens.org_biospecimen_sample_brca.txt"
 #SAMPLE_TYPE="Primary Tumor"
 
+SAMPLE_TYPE_FILE="./nationwidechildrens.org_biospecimen_sample_acc.txt"
 
 
 #meth2mat( DATA_PATH, SDRF_FILE, SAMPLE_TYPE_FILE,SAMPLE_TYPE  , DATA_TYPE=".HumanMethylation27.4.lvl-3", OUTPUT_FILE="e.rda"   )
 
 #Convert genomic profiles into a matrix
-meth2mat<-function( DATA_PATH=DATA_PATH, SDRF_FILE=SDRF_FILE, SAMPLE_TYPE_FILE=SAMPLE_TYPE_FILE, SAMPLE_TYPE=SAMPLE_TYPE, DATA_TYPE=".rsem.genes.results", OUTPUT_FILE="e.rda"   ){
+meth2mat<-function( DATA_PATH=DATA_PATH, CANCER_TYPE, SAMPLE_TYPE_FILE=SAMPLE_TYPE_FILE, SAMPLE_TYPE=SAMPLE_TYPE, DATA_TYPE=".HumanMethylation450.*.lvl-3", OUTPUT_FILE="e.rda"  ){
 
 #Read the RSEM data 
 cat("Sorting genomic profiles...")
 files = dir(path= DATA_PATH, full.names=TRUE);
 files = files[grep(DATA_TYPE, files)];
-data <- lapply(files, read.delim, stringsAsFactors=FALSE, as.is=TRUE);
+
+ge_single<-read.delim(files[1])
+ge_single<-ge_single[2:nrow(ge_single),]
+gn<-as.character(ge_single[,3])
+gn[which(gn=="")]<-as.character(ge_single[which(gn==""),1])
+cat("DONE\n")
+
+#Combine as matrix
+cat("Parsing genomic profiles...")
+e<-matrix(as.numeric(as.character(ge_single[,2])),length(gn),1)
+rownames(e)<-gn
+
+b <- txtProgressBar(style=3)
+for(i in 2:length(files) ){
+    ge_single<-read.delim(files[i])
+    ge_single<-as.numeric(as.character(ge_single[2:nrow(ge_single),2]))
+    e<-cbind(e,ge_single)
+    if(i %% 10 == 0)
+      setTxtProgressBar(b, i/length(barcode))  
+}
+cat( "\n", length(barcode), " genomic profiles are parsed\n"   ) 
+
 
 #Data filtering
 files<-gsub(".*jhu-usc.edu_","",files)
 files<-gsub(DATA_TYPE,"",files)
-files<-substr(files,6,21)
-cat("DONE\n")
+files<-gsub(DATA_TYPE,"",files)
+files<-gsub(CANCER_TYPE,"",files)
+files<-substr(files,6+offset,21+offset)
+
+colnames(e)<-files
 
 
 #Read the sample information data
@@ -38,46 +63,6 @@ sample_bio <- read.delim(SAMPLE_TYPE_FILE, as.is=TRUE);
 sample_tumor<- which( sample_bio[,"sample_type"] == SAMPLE_TYPE )
 sample_retain_barcode <- sample_bio[sample_tumor, "bcr_sample_barcode"]
 cat("DONE\n")
-
-#Combine as matrix
-cat("Parsing genomic profiles...")
-data <- lapply(1:length(data),  function(i) data[[i]]=data[[i]][2:nrow(data[[i]]),]   )
-data <- lapply(1:length(data), function(i) cbind(barcode=files[i],
-      data[[i]][,c(3,2)]))
-
-
-for( i in 1:length(data)) colnames(data[[i]])=c("barcode", "Gene_Symbol", "Beta_value" )
-
-rdata <- do.call(rbind, data );
-cat("DONE\n")
-
-
-#Initiate a matrix
-cat("Merging...")
-geneName<-data[[1]][,"Gene_Symbol"]
-barcode<-unique(rdata[,"barcode"])
-
-e<-matrix(0, length(geneName), length(barcode) )
-rownames(e)<-geneName
-colnames(e)<-barcode
-
-colnames(e)<-substr(colnames(e),1,16)
-
-
-#Conversion
-b <- txtProgressBar(style=3)
-for( i in 1:length(barcode)){
-    if(is.na(barcode[i])==FALSE){
-        sample_e<- rdata[ which( rdata[,"barcode"]==as.character(barcode[i]) ),3]
-        e[,i]<-sample_e
-    }
-
-    if(i %% 10 == 0)
-      setTxtProgressBar(b, i/length(barcode))    
-} #End of for 
-
-cat( "\n", length(barcode), " genomic profiles are parsed\n"   ) 
-
 
 
 #extract subset
