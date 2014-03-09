@@ -89,7 +89,7 @@ for( i in 1:length(barcode)){
     }
 
     if(i %% 10 == 0)
-      setTxtProgressBar(b, i/length(files))    
+      setTxtProgressBar(b, i/length(barcode))    
 } #End of for 
 
 cat( "\n", length(barcode), " genomic profiles are parsed\n"   ) 

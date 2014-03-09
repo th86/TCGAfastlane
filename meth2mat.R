@@ -12,12 +12,10 @@
 #SAMPLE_TYPE_FILE="/media/taihsien/F620B94320B90C1D/dataset/TCGA_meth/BRCA/nationwidechildrens.org_biospecimen_sample_brca.txt"
 #SAMPLE_TYPE="Primary Tumor"
 
-SAMPLE_TYPE_FILE="./nationwidechildrens.org_biospecimen_sample_acc.txt"
 
 
-#meth2mat( DATA_PATH, SDRF_FILE, SAMPLE_TYPE_FILE,SAMPLE_TYPE  , DATA_TYPE=".HumanMethylation27.4.lvl-3", OUTPUT_FILE="e.rda"   )
+#meth2mat( DATA_PATH, SAMPLE_TYPE_FILE,SAMPLE_TYPE  , DATA_TYPE=".HumanMethylation27.4.lvl-3", OUTPUT_FILE="e.rda"   )
 
-#Convert genomic profiles into a matrix
 meth2mat<-function( DATA_PATH=DATA_PATH, CANCER_TYPE, SAMPLE_TYPE_FILE=SAMPLE_TYPE_FILE, SAMPLE_TYPE=SAMPLE_TYPE, DATA_TYPE=".HumanMethylation450.*.lvl-3", OUTPUT_FILE="e.rda"  ){
 
 #Read the RSEM data 
@@ -42,9 +40,9 @@ for(i in 2:length(files) ){
     ge_single<-as.numeric(as.character(ge_single[2:nrow(ge_single),2]))
     e<-cbind(e,ge_single)
     if(i %% 10 == 0)
-      setTxtProgressBar(b, i/length(barcode))  
+      setTxtProgressBar(b, i/length(files))  
 }
-cat( "\n", length(barcode), " genomic profiles are parsed\n"   ) 
+cat( "\n", length(files), " genomic profiles are parsed\n"   ) 
 
 
 #Data filtering
@@ -78,4 +76,3 @@ cat("DONE\n")
 
     return(ncol(e))
 }
-
