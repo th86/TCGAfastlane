@@ -50,7 +50,7 @@ files<-gsub(".*jhu-usc.edu_","",files)
 files<-gsub(DATA_TYPE,"",files)
 files<-gsub(DATA_TYPE,"",files)
 files<-gsub(CANCER_TYPE,"",files)
-files<-substr(files,6+offset,21+offset)
+files<-substr(files,2,17)
 
 colnames(e)<-files
 
