@@ -16,7 +16,7 @@
 
 #meth2mat( DATA_PATH, SAMPLE_TYPE_FILE,SAMPLE_TYPE  , DATA_TYPE=".HumanMethylation27.4.lvl-3", OUTPUT_FILE="e.rda"   )
 
-meth2mat<-function( DATA_PATH=DATA_PATH, CANCER_TYPE, SAMPLE_TYPE_FILE=SAMPLE_TYPE_FILE, SAMPLE_TYPE=SAMPLE_TYPE, DATA_TYPE=".HumanMethylation27.*.lvl-3", OUTPUT_FILE="e.rda"  ){
+meth2mat<-function( DATA_PATH=DATA_PATH, CANCER_TYPE, SAMPLE_TYPE_FILE=SAMPLE_TYPE_FILE, SAMPLE_TYPE=SAMPLE_TYPE, DATA_TYPE=".HumanMethylation450.*.lvl-3", OUTPUT_FILE="e.rda"  ){
 
 #Read the RSEM data 
 cat("Sorting genomic profiles...")
