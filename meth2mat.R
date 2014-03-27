@@ -16,7 +16,7 @@
 
 #meth2mat( DATA_PATH, SAMPLE_TYPE_FILE,SAMPLE_TYPE  , DATA_TYPE=".HumanMethylation27.4.lvl-3", OUTPUT_FILE="e.rda"   )
 
-meth2mat<-function( DATA_PATH=DATA_PATH, CANCER_TYPE, SAMPLE_TYPE_FILE=SAMPLE_TYPE_FILE, SAMPLE_TYPE=SAMPLE_TYPE, DATA_TYPE=".HumanMethylation450.*.lvl-3", OUTPUT_FILE="e.rda"  ){
+meth2mat<-function( DATA_PATH=DATA_PATH, CANCER_TYPE, SAMPLE_TYPE_FILE=SAMPLE_TYPE_FILE, SAMPLE_TYPE=SAMPLE_TYPE, DATA_TYPE=".HumanMethylation27.*.lvl-3", OUTPUT_FILE="e.rda"  ){
 
 #Read the RSEM data 
 cat("Sorting genomic profiles...")
@@ -26,6 +26,7 @@ files = files[grep(DATA_TYPE, files)];
 ge_single<-read.delim(files[1])
 ge_single<-ge_single[2:nrow(ge_single),]
 gn<-as.character(ge_single[,3])
+names(gn)<-as.character(ge_single[,1])
 gn[which(gn=="")]<-as.character(ge_single[which(gn==""),1])
 cat("DONE\n")
 
